@@ -10,6 +10,7 @@ function App() {
   const [position,setPosition]=useState("");
   const [country,setCountry]=useState("");
   const [wage,setWage]=useState(0);
+  const [newwage,setNewWage]=useState(0);
 
   const [employeeList, setEmployeeList] = useState([]);
 
@@ -34,11 +35,22 @@ function App() {
    })
   );
 
+
   const showemployees = () =>(
     axios.get('http://localhost:3001/employees',{}).then((respons)=> {
      setEmployeeList(respons.data);
    })
   );
+
+  const updateEmployeewage =(id) =>{
+    axios.put('http://localhost:3001/update',{wage:newwage, id:id}).then((respons)=>
+    {
+     setEmployeeList(employeeList.map((val)=>{
+       return val.id == id ?{id:val.id, name: val.name, country: val.country, position: val.position, age: val.age, wage: newwage}: val
+     }
+     ))
+  })
+  }
 
   return (
     <div className="App">
@@ -95,11 +107,22 @@ function App() {
            {employeeList.map((val,key) =>{
              return(
                <div className="employee">
+                 <div>
                  <h3>Name :{val.name}</h3>
                  <h3>Age :{val.age}</h3>
                  <h3>Position :{val.position}</h3>
                  <h3>Country :{val.country}</h3>
                  <h3>Wage :{val.wage}</h3>
+                 </div>
+                  <div>
+                  <input type="text" placeholder="2000..." 
+                  onChange={(event)=>{
+                    setNewWage(event.target.value);
+                  }
+                 }
+                  />
+                  <button onClick={()=>{updateEmployeewage(val.id)}}>Update</button>
+                  </div>
                </div>
              )
            })}

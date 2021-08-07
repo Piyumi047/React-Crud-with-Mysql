@@ -12,7 +12,7 @@
   align-items: center;
 }
 
-.information input {
+ input {
   width: 300px;
   height: 50px;
   font-size: 18px;
@@ -20,10 +20,12 @@
   margin: 5px;
 }
 
- button{
+button{
   width: 300px;
   height: 50px;
   margin-top: 30px;
+  padding-left: 35px;
+  margin: 5px;
 }
 
 
